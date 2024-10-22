@@ -1,6 +1,7 @@
 package com.example.techinfo.Fragments.BuildPC
 
 import AlertDialog_Buildpc
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -62,7 +64,7 @@ class BuildPC : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.componentsRecyclerView)
-        componentAdapter = Adapter(componentDataList) { component, position ->
+        componentAdapter = Adapter(componentDataList, { component, position ->
             val componentName = component.name
             if (componentName.isNotEmpty()) {
                 val partCatalogFragment = ItemCatalog.newInstance(component.type)
@@ -71,12 +73,13 @@ class BuildPC : Fragment() {
                     .addToBackStack(null)
                     .commit()
             }
-        }
+        }, isInBuildPCFragment = true) // Pass true to indicate it's in BuildPC fragment
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = componentAdapter
         }
+
 
         parentFragmentManager.setFragmentResultListener("selectedComponent", this) { _, bundle ->
             val selectedComponent = bundle.getSerializable("selectedComponent") as ComponentData
@@ -108,6 +111,28 @@ class BuildPC : Fragment() {
         storageProgressBar.progress = 0
         psuProgressBar.progress = 0
     }
+    override fun onResume() {
+        super.onResume()
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            showExitConfirmationDialog()
+        }
+    }
+
+    private fun showExitConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Exit")
+            .setMessage("Are you sure you want to exit the app?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                requireActivity().finish() // Finish the activity to exit the app
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss() // Dismiss the dialog
+            }
+            .create()
+            .show()
+    }
+
 
     private fun updateSelectedComponent(type: String, component: ComponentData) {
         selectedComponentsMap[type] = component
@@ -145,12 +170,12 @@ class BuildPC : Fragment() {
         for ((type, component) in selectedComponentsMap) {
             val position = componentDataList.indexOfFirst { it.type.equals(type, ignoreCase = true) }
             if (position != -1) {
-                componentDataList[position] = component
+                componentDataList[position] = component ?: ComponentData(type, "") // Use a placeholder if unselected
                 componentAdapter.notifyItemChanged(position)
             }
         }
 
-        updateProgressBars()
+        updateProgressBars() // Make sure to update progress bars after restoring
     }
 
     private fun getAllSelectedComponents(): Map<String, String> {
