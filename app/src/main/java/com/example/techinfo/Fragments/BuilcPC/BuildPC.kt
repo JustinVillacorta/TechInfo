@@ -2,7 +2,6 @@ package com.example.techinfo.Fragments.BuildPC
 
 import AlertDialog_Buildpc
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -62,7 +61,6 @@ class BuildPC : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         recyclerView = view.findViewById(R.id.componentsRecyclerView)
         componentAdapter = Adapter(componentDataList, { component, position ->
             val componentName = component.name

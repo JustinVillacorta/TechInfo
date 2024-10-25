@@ -1,5 +1,6 @@
 package com.example.techinfo.Fragments.PcComparison
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -56,6 +57,48 @@ class PcComparison : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        val showBuildsButton: Button = view.findViewById(R.id.showBuildsButton)
+
+        showBuildsButton.setOnClickListener {
+            // Get selected build names
+            val buildOneName = view.findViewById<AutoCompleteTextView>(R.id.Parts1).text.toString()
+            val buildTwoName = view.findViewById<AutoCompleteTextView>(R.id.Parts2).text.toString()
+
+            // Get the file contents based on selected build names
+            val buildOneFile = File(buildsDirectory, "$buildOneName.txt")
+            val buildTwoFile = File(buildsDirectory, "$buildTwoName.txt")
+
+            // Read build data if files exist
+            if (buildOneFile.exists() && buildTwoFile.exists()) {
+                val buildOneData = readBuildData(buildOneFile)
+                val buildTwoData = readBuildData(buildTwoFile)
+
+                // Prepare a message for the alert dialog
+                val message = buildString {
+                    append("Build 1 Components:\n")
+                    buildOneData.forEach { (key, value) ->
+                        append("$key: $value\n")
+                    }
+                    append("\nBuild 2 Components:\n")
+                    buildTwoData.forEach { (key, value) ->
+                        append("$key: $value\n")
+                    }
+                }
+
+                // Create and show the alert dialog
+                val dialogBuilder = AlertDialog.Builder(requireContext())
+                dialogBuilder.setTitle("Selected Builds")
+                    .setMessage(message)
+                    .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                    .create()
+                    .show()
+            } else {
+                // Handle cases where build files are not found (e.g., show an error message)
+                Toast.makeText(requireContext(), "Build files not found.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // Get the directory containing build files
         buildsDirectory = File(requireContext().filesDir, "PC_Builds")
