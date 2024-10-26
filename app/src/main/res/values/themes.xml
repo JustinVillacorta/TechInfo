@@ -16,4 +16,9 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="HintTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:layout_marginTop">0dp</item> <!-- Adjust this value as necessary -->
+    </style>
+
 </resources>

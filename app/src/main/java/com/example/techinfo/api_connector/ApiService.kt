@@ -1,5 +1,4 @@
 package com.example.techinfo.api_connector
-
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -130,6 +129,7 @@ data class PowerSupplyUnit(
     val efficiency_rating: String,            // Efficiency rating (e.g., "80+ Gold")
     val has_required_connectors: Int,         // Whether it has the required connectors
     val performance_score: String,
+    val link: String?,
     val created_at: String,                   // Creation timestamp
     val updated_at: String                    // Last updated timestamp
 ) : Serializable  // Make it Serializable
@@ -147,6 +147,7 @@ data class Case(
     val current_ssd_count: Int,           // Current number of installed SSDs
     val airflow_rating: String,           // Airflow rating (e.g., low, medium, high)
     val max_cooler_height_mm: String,     // Maximum CPU cooler height in mm
+    val link: String?,
     val created_at: String,               // Creation timestamp
     val updated_at: String                // Last updated timestamp
 ) : Serializable  // Make it Serializable
@@ -207,12 +208,6 @@ data class SelectedComponents(
     val ssd: String?
 )
 
-// Data class to represent the validation error response
-data class CompatibilityErrorResponse(
-    val error: Boolean,
-    val message: String,
-    val errors: Map<String, List<String>> // Map of field names to validation error messages
-)
 
 data class BottleneckRequest(
     val processor_name: String,
@@ -229,7 +224,32 @@ data class BottleneckResponse(
     val message: String
 )
 
+data class BuildComparisonRequest(
+    val build_one: BuildData,
+    val build_two: BuildData
+)
 
+data class BuildData(
+    val processor_name: String,
+    val gpu_name: String,
+    val ram_name: String,
+    val psu_name: String,
+    val ssd_name: String,
+    val hdd_name: String
+)
+
+data class BuildComparisonResponse(
+    val build_one: BuildMetrics,
+    val build_two: BuildMetrics
+)
+
+data class BuildMetrics(
+    val processor_percentage: Double,
+    val gpu_percentage: Double,
+    val ram_percentage: Double,
+    val psu_percentage: Double,
+    val ssd_percentage: Double
+)
 
 data class TroubleShoot_data(
     val title: String,
@@ -267,10 +287,6 @@ interface ApiService {
     // Request to reset password with OTP and new password
     @POST("admin/reset-password")
     fun resetPassword(@Body request: PasswordResetRequest): Call<Void>
-
-    // PUT method to update a processor
-    @PUT("processors/{id}")
-    fun updateProcessor(@Path("id") processorId: String, @Body processor: Processor): Call<Processor>
 
     // Component APIs
     @GET("processors")
@@ -315,21 +331,11 @@ interface ApiService {
         @Query("hdd_name") hddName: String,
         @Query("ssd_name") ssdName: String
     ): Call<CompatibilityResponse> // Use a different return type if the API returns a response body
-    // Call to handle validation error
-    @GET("compatibility_checker")
-    fun checkCompatibilityWithValidationError(
-        @Query("processor_name") processorName: String?,
-        @Query("motherboard_name") motherboardName: String?,
-        @Query("ram_name") ramName: String?,
-        @Query("gpu_name") gpuName: String?,
-        @Query("psu_name") psuName: String?,
-        @Query("case_name") caseName: String?,
-        @Query("cooler_name") coolerName: String?,
-        @Query("hdd_name") hddName: String?,
-        @Query("ssd_name") ssdName: String?
-    ): Call<CompatibilityErrorResponse> // Error response for validation issues
 
     @POST("bottleneck")
     fun postBottleneckData(@Body data: BottleneckRequest): Call<BottleneckResponse>
+
+    @POST("pc_compare")
+    fun getBuildComparison(@Body data: BuildComparisonRequest): Call<BuildComparisonResponse>
 
 }

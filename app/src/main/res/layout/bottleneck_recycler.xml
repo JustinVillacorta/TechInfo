@@ -1,6 +1,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="20dp"
@@ -45,21 +46,21 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ComponentsDropDown"
             style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="218dp"
+            android:layout_height="53dp"
+            android:layout_marginEnd="20dp"
             android:hint="Please Select Hardware"
-            app:layout_constraintStart_toEndOf="@+id/icon"
-            app:layout_constraintTop_toBottomOf="@+id/hardware_label"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="20dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/icon"
+            app:layout_constraintTop_toBottomOf="@+id/hardware_label">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Select part"
-                android:inputType="none" />
+                android:inputType="none"
+                android:text="Select part" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

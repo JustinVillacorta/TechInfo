@@ -42,15 +42,15 @@ class MainNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.buildcompare -> {
-                    replaceFragment(PcComparison())
+                    replaceFragment(PcComparison(),"PC compare")
                     true
                 }
                 R.id.pc_parts -> {
-                    replaceFragment(AdminView())
+                    replaceFragment(AdminView(), "Admin")
                     true
                 }
                 R.id.troubleShoot_admin -> {
-                    replaceFragment(TroubleshootAdmin())
+                    replaceFragment(TroubleshootAdmin(),"Admin")
                     true
                 }
                 else -> false
@@ -65,7 +65,7 @@ class MainNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         // Initialize with BuildPCFragment and hide bottom navigation
         if (savedInstanceState == null) {
-            replaceFragment(BuildPC())  // Use BuildPCFragment instead of BuildPC
+            replaceFragment(BuildPC(), "Build your PC")  // Use BuildPCFragment instead of BuildPC
             navigationView.setCheckedItem(R.id.nav_buildpc)
             binding.bottomNavigationView.visibility = View.GONE // Hide Bottom Nav initially
         }
@@ -74,30 +74,30 @@ class MainNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_buildpc -> {
-                replaceFragment(BuildPC())  // Use BuildPCFragment instead of BuildPC
+                replaceFragment(BuildPC(),"Build your PC")  // Use BuildPCFragment instead of BuildPC
                 binding.bottomNavigationView.visibility = View.GONE // Hide Bottom Nav
             }
             R.id.nav_pc_compare -> {
-                replaceFragment(PcComparison())
+                replaceFragment(PcComparison(), "PC compare")
                 binding.bottomNavigationView.visibility = View.GONE // Hide Bottom Nav
             }
             R.id.nav_bottleneck -> {
-                replaceFragment(BottleNeck())
+                replaceFragment(BottleNeck(), "Bottleneck Calculator")
                 binding.bottomNavigationView.visibility = View.GONE // Hide Bottom Nav
             }
             R.id.nav_troubleshoot -> {
-                replaceFragment(TroubleShoot())
+                replaceFragment(TroubleShoot(), "Troubleshoot")
                 binding.bottomNavigationView.visibility = View.GONE // Hide Bottom Nav
             }
             R.id.nav_admin -> {
                 if (recievedData == 1) {
                     // User logged in, show AdminView and bottom navigation
-                    replaceFragment(AdminView())
+                    replaceFragment(AdminView(), "Admin")
                     binding.bottomNavigationView.visibility = View.VISIBLE // Show Bottom Nav after login
                     updateBottomNavigation(R.menu.bottom_navbar) // Show Admin specific nav menu
                 } else {
                     // Not logged in, show Admin fragment and hide bottom navigation
-                    replaceFragment(Admin())
+                    replaceFragment(Admin(),"Admin")
                     binding.bottomNavigationView.visibility = View.GONE // Ensure Bottom Nav is hidden
                 }
             }
@@ -115,16 +115,17 @@ class MainNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun PassInt(data: Int) {
         recievedData = data
         if (recievedData == 1) {
-            replaceFragment(AdminView())
+            replaceFragment(AdminView(), "Admin")
             binding.bottomNavigationView.visibility = View.VISIBLE
             updateBottomNavigation(R.menu.bottom_navbar)
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment, title: String) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+        supportActionBar?.title = title
     }
 
     override fun onBackPressed() {
