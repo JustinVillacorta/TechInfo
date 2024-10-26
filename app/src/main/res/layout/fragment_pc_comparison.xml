@@ -53,10 +53,11 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_corners_background"
                     android:gravity="center"
+                    android:padding="15dp"
                     android:inputType="none"
                     android:text="Build 1"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +92,8 @@
                     android:inputType="none"
                     android:text="Build 2"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp"
+                    android:padding="15dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
