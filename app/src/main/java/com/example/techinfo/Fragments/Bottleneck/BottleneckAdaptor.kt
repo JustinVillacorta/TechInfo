@@ -9,9 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.techinfo.R
-import com.example.techinfo.api_connector.ApiService
 import com.example.techinfo.api_connector.*
-import com.example.techinfo.api_connector.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -90,7 +88,7 @@ class BottleneckAdaptor(
         val currentItem = bottleList[position]
 
         holder.textView.text = currentItem.name
-        holder.imageView.setImageResource(R.drawable.ic_launcher_foreground) // Placeholder image
+        holder.imageView.setImageResource(icons(currentItem.name))
 
         val options = when (currentItem.name) {
             "Central Processing Unit" -> processorsList
@@ -116,5 +114,15 @@ class BottleneckAdaptor(
     // New method to get selected options
     fun getSelectedOptions(): List<String?> {
         return bottleList.map { it.selectedOption }
+    }
+
+
+    private fun icons(componentType: String): Int {
+        return when (componentType) {
+            "Central Processing Unit" -> R.drawable.cpu
+            "Graphics Processing Unit" -> R.drawable.gpu
+            "Resolution" -> R.drawable.monitor
+            else -> R.drawable.baseline_buildpc_24
+        }
     }
 }
