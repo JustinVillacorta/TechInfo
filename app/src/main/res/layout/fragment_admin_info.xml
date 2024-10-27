@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp"> <!-- Added padding for spacing -->
+                    android:padding="16dp">
 
                     <TextView
                         android:id="@+id/contentTextView"
@@ -87,7 +87,42 @@
 
             </ScrollView>
 
-            <!-- Add the "OK" Button at the bottom -->
+            <!-- Add the "Add", "Update", and "Delete" Buttons at the bottom -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/addButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Add"
+                    android:textColor="@android:color/black"
+                    android:background="@color/white"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp" /> <!-- Add margin for spacing -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/updateButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Update"
+                    android:textColor="@android:color/black"
+                    android:background="@color/white"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp" /> <!-- Add margin for spacing -->
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/deleteButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:textColor="@android:color/black"
+                    android:background="@color/white"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
