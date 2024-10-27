@@ -43,12 +43,27 @@ class admin_adapter(val context: Context, val adminList: ArrayList<admin_data_cl
                     val recyclerView = dialogView.findViewById<RecyclerView>(R.id.modelsRecyclerView)
                     recyclerView.layoutManager = LinearLayoutManager(context)
 
-                    // Sample data for the adapter (replace this with your real data)
+                    // Create a list with only the selected item to pass to the adapter
                     val dataList = listOf(
-                        update_and_add_data_class("Model 1", "Specs 1"),
-                        update_and_add_data_class("Model 2", "Specs 2")
+                        update_and_add_data_class(
+                            modelName = selectedAdminItem.ModelName,
+                            specs = selectedAdminItem.Specs,
+                            category = "CPU", // Set category directly or get it from selectedAdminItem
+                            brand = selectedAdminItem.brand,
+                            socketType = selectedAdminItem.socket_type,
+                            baseClockSpeed = selectedAdminItem.base_clock_speed,
+                            maxTurboBoostClockSpeed = selectedAdminItem.max_turbo_boost_clock_speed.toString(),
+                            compatibleChipsets = selectedAdminItem.compatible_chipsets,
+                            link = selectedAdminItem.link ?: "", // Provide a default value
+                            cacheSizeMb = selectedAdminItem.cache_size_mb,
+                            integratedGraphics = selectedAdminItem.integrated_graphics ?: "Unknown", // Default value
+                            tdp = selectedAdminItem.tdp,
+                            cores = selectedAdminItem.cores,
+                            threads = selectedAdminItem.threads
+                        )
                     )
 
+                    // Pass the filtered list (only the selected item) to the adapter
                     val adapter = update_and_add_adapter(dataList)
                     recyclerView.adapter = adapter
 
@@ -91,6 +106,9 @@ class admin_adapter(val context: Context, val adminList: ArrayList<admin_data_cl
         // Show the popup menu
         popupMenu.show()
     }
+
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminViewHolder {
         val inflater = LayoutInflater.from(parent.context)

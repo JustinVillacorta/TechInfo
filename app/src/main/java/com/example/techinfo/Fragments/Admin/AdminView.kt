@@ -52,27 +52,36 @@ class AdminView : Fragment() {
     }
 
     private fun openAddDialog() {
-        if (isAdded) {  // Ensure fragment is attached
+        if (isAdded) {
             val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.pc_parts_add, null)
-
-            // Find RecyclerView in the dialog layout
             val recyclerView = dialogView.findViewById<RecyclerView>(R.id.modelsRecyclerView)
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-            // Sample data for the adapter (replace this with your real data)
-            val dataList = listOf(
-                update_and_add_data_class("Model 1", "Specs 1"),
-                update_and_add_data_class("Model 2", "Specs 2")
-            )
+            val updateAddList: List<update_and_add_data_class> = adminList.map { adminItem ->
+                update_and_add_data_class(
+                    modelName = adminItem.ModelName,
+                    specs = adminItem.Specs,
+                    category = adminItem.Category,
+                    brand = adminItem.brand,
+                    socketType = adminItem.socket_type,
+                    baseClockSpeed = adminItem.base_clock_speed,
+                    maxTurboBoostClockSpeed = adminItem.max_turbo_boost_clock_speed ?: "N/A",
+                    compatibleChipsets = adminItem.compatible_chipsets,
+                    link = adminItem.link,
+                    cacheSizeMb = adminItem.cache_size_mb,
+                    integratedGraphics = adminItem.integrated_graphics ?: "Unknown",
+                    tdp = adminItem.tdp,
+                    cores = adminItem.cores,
+                    threads = adminItem.threads
+                )
+            }
 
-            val adapter = update_and_add_adapter(dataList)
+            val adapter = update_and_add_adapter(updateAddList)
             recyclerView.adapter = adapter
 
-            // Build the AlertDialog
             AlertDialog.Builder(requireContext())
                 .setView(dialogView)
                 .setPositiveButton("Save") { dialog, _ ->
-                    // Handle save logic here
                     dialog.dismiss()
                 }
                 .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
@@ -96,9 +105,7 @@ class AdminView : Fragment() {
                 requireActivity().finish() // Finish the activity to exit the app
                 dialog.dismiss()
             }
-            .setNegativeButton("No") { dialog, _ ->
-                dialog.dismiss() // Dismiss the dialog
-            }
+            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
             .create()
             .show()
     }
@@ -115,26 +122,26 @@ class AdminView : Fragment() {
                         val adminItem = admin_data_class(
                             processorId = processor.processor_id,
                             ModelName = processor.processor_name,
-                            Specs = "Brand: ${processor.brand}, Socket: ${processor.socket_type}, Clock Speed: ${processor.base_clock_speed} GHz - ${processor.max_turbo_boost_clock_speed} GHz",
+                            Specs = "Brand: ${processor.brand}, Socket: ${processor.socket_type}, Clock Speed: ${processor.base_clock_speed} GHz - ${processor.max_turbo_boost_clock_speed ?: "N/A"} GHz",
                             Category = "CPU",
                             brand = processor.brand,
                             socket_type = processor.socket_type,
-                            base_clock_speed = processor.base_clock_speed,
-                            max_turbo_boost_clock_speed = processor.max_turbo_boost_clock_speed,
-                            compatible_chipsets = processor.compatible_chipsets,
-                            link = processor.link ?: "",  // Provide a default value or handle null
-                            cache_size_mb = processor.cache_size_mb,
-                            performance_score = processor.performance_score,
-                            integrated_graphics = processor.integrated_graphics,
-                            tdp = processor.tdp,
-                            cores = processor.cores,
-                            threads = processor.threads,
-                            created_at = processor.created_at,
-                            updated_at = processor.updated_at
+                            base_clock_speed = processor.base_clock_speed ?: "N/A",
+                            max_turbo_boost_clock_speed = processor.max_turbo_boost_clock_speed ?: "N/A", // Handle null case
+                            compatible_chipsets = processor.compatible_chipsets ?: "N/A",
+                            link = processor.link ?: "",
+                            cache_size_mb = processor.cache_size_mb ?: "N/A",
+                            performance_score = processor.performance_score ?: "N/A",
+                            integrated_graphics = processor.integrated_graphics ?: "Unknown",
+                            tdp = processor.tdp ?: "N/A",
+                            cores = processor.cores ?: "N/A",
+                            threads = processor.threads ?: "N/A",
+                            created_at = processor.created_at ?: "",
+                            updated_at = processor.updated_at ?: ""
                         )
                         adminList.add(adminItem)
                     }
-                    filteredList.addAll(adminList)  // Initially show all data
+                    filteredList.addAll(adminList)
                     adminAdapter.notifyDataSetChanged()
                 } else {
                     Log.e("AdminView", "API Error: ${response.code()}")
@@ -151,14 +158,12 @@ class AdminView : Fragment() {
         })
     }
 
-    // Method to open the edit dialog for an existing item
     fun openEditDialog(item: admin_data_class, position: Int) {
-        if (isAdded) {  // Ensure fragment is attached
-            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_item, null)
+        if (isAdded) {
+            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_edit_item, null)
             val modelNameEditText = dialogView.findViewById<EditText>(R.id.ModelNameEditText)
             val specsEditText = dialogView.findViewById<EditText>(R.id.SpecsEditText)
 
-            // Pre-fill the EditTexts with current data
             modelNameEditText.setText(item.ModelName)
             specsEditText.setText(item.Specs)
 
@@ -168,33 +173,19 @@ class AdminView : Fragment() {
                     val updatedModelName = modelNameEditText.text.toString().trim()
                     val updatedSpecs = specsEditText.text.toString().trim()
 
-                    if (updatedModelName.isEmpty() || updatedSpecs.isEmpty()) {
-                        Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
-                        return@setPositiveButton
-                    }
-
-                    // Update logic to update the item
                     val updatedItem = item.copy(
                         ModelName = updatedModelName,
-                        Specs = updatedSpecs,
-                        updated_at = getCurrentDateTime() // Update the timestamp if needed
+                        Specs = updatedSpecs
                     )
 
-                    adminList[position] = updatedItem // Replace the old item with the updated item
+                    adminList[position] = updatedItem
                     adminAdapter.notifyItemChanged(position)
                     Toast.makeText(requireContext(), "Item updated successfully", Toast.LENGTH_SHORT).show()
-
                     dialog.dismiss()
                 }
                 .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
                 .create()
                 .show()
         }
-    }
-
-    // Helper function to get the current date and time
-    private fun getCurrentDateTime(): String {
-        // Add logic here to generate the current date-time in the desired format
-        return "2024-10-19T12:00:00Z"  // Example, replace with dynamic value
     }
 }
