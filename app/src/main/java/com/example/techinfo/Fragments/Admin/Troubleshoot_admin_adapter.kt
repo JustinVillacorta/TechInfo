@@ -11,7 +11,6 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.techinfo.Fragments.Admin.admin_adapter.AdminViewHolder
 import com.example.techinfo.R
 
 class Troubleshoot_admin_adapter(val context: Context, val  troubleshootList:ArrayList<troubleshoot_admin_data_class>):RecyclerView.Adapter<Troubleshoot_admin_adapter.AdminTroubleshootViewHolder>()
