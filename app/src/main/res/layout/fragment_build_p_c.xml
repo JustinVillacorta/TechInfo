@@ -164,6 +164,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Build your PC"
+        android:textColor="@color/white"
+        android:background="@drawable/dark_blue_background_rect"
         android:layout_marginTop="16dp"
         android:padding="16dp"
         android:textSize="18sp" />
