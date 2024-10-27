@@ -8,27 +8,27 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_buildpc"
-            android:icon="@drawable/baseline_buildpc_24"
+            android:icon="@drawable/buildpc"
             android:title="Build your PC" />
 
         <item
             android:id="@+id/nav_bottleneck"
-            android:icon="@drawable/bottleneck_24"
+            android:icon="@drawable/bottleneck"
             android:title="Bottleneck Calculator" />
 
         <item
             android:id="@+id/nav_pc_compare"
-            android:icon="@drawable/pc_comparison_24"
+            android:icon="@drawable/comparison"
             android:title="PC Compare" />
 
         <item
             android:id="@+id/nav_troubleshoot"
-            android:icon="@drawable/baseline_troubleshoot_24"
+            android:icon="@drawable/troubleshoot_icon"
             android:title="Troubleshoot and Solutions" />
 
         <item
             android:id="@+id/nav_admin"
-            android:icon="@drawable/baseline_person_24"
+            android:icon="@drawable/admin"
             android:title="Admin" />
     </group>
 

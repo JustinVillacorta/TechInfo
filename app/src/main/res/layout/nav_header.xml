@@ -4,28 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="150dp"
     android:gravity="top"
-    android:padding="16dp"
-    android:background="@drawable/gradiant_background"
+    android:background="@color/background"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_width="256dp"
-        android:layout_height="164dp"
+        android:layout_width="308dp"
+        android:layout_height="167dp"
         android:layout_gravity="center"
         android:layout_marginStart="55dp"
         android:layout_marginTop="32dp"
-        android:foregroundGravity="center"
         android:layout_marginEnd="59dp"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/logo"
+        android:foregroundGravity="center"
+        android:src="@drawable/logonavbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.579">
 
     </ImageView>
 
