@@ -1,6 +1,5 @@
 package com.example.techinfo.Fragments
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,11 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.VideoView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.techinfo.MainNavigation.MainNavigation
 import com.example.techinfo.R
 
-// Splash Fragment with Video Handling
 class SplashFragment : Fragment() {
 
     override fun onCreateView(
@@ -37,38 +34,21 @@ class SplashFragment : Fragment() {
 
         // Add a listener for when the video completes
         splashVideoView.setOnCompletionListener {
-            // Check if onboarding is finished and navigate accordingly
-            if (onBoardingFinished()) {
-                // Navigate to MainNavigation Activity
-                val intent = Intent(activity, MainNavigation::class.java)
-                startActivity(intent)
-                activity?.finish() // Finish SplashFragment activity
-            } else {
-                // Navigate to the ViewPageFragment using NavController
-                findNavController().navigate(R.id.action_splashFragment_to_viewPageFragment)
-            }
+            // Navigate to MainNavigation Activity
+            val intent = Intent(activity, MainNavigation::class.java)
+            startActivity(intent)
+            activity?.finish()
         }
 
-        // In case the video takes a while to finish, set a timeout as a fallback (optional)
+        // Set a fallback timeout in case the video fails to play
         Handler(Looper.getMainLooper()).postDelayed({
             if (!splashVideoView.isPlaying) {
-                // Handle cases where the video might not play or takes too long
-                if (onBoardingFinished()) {
-                    val intent = Intent(activity, MainNavigation::class.java)
-                    startActivity(intent)
-                    activity?.finish()
-                } else {
-                    findNavController().navigate(R.id.action_splashFragment_to_viewPageFragment)
-                }
+                val intent = Intent(activity, MainNavigation::class.java)
+                startActivity(intent)
+                activity?.finish()
             }
-        }, 1000) // Optional fallback timeout, in case video is not working
+        }, 1000) // Optional timeout
 
         return view
-    }
-
-    // Check if the onboarding process is finished
-    private fun onBoardingFinished(): Boolean {
-        val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
-        return sharedPref.getBoolean("Finished", false)
     }
 }

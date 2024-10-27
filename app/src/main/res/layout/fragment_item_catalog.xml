@@ -25,7 +25,7 @@
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:queryHint="Search articles..."
+            android:queryHint="Search Parts..."
             android:iconifiedByDefault="false"
             android:background="@color/white" />
 
