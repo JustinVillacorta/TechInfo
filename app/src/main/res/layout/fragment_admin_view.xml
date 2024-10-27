@@ -10,25 +10,6 @@
 
 
     <!-- Floating Action Buttons -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/Models"
-        style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:hint="Models"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/guideline1"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/guideline3">
-
-        <AutoCompleteTextView
-            android:id="@+id/filter"
-            android:layout_width="110dp"
-            android:layout_height="50dp"
-            android:inputType="none"
-            android:text="All" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/Add"
@@ -54,8 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Models"
-        app:layout_constraintVertical_bias="0.923" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
