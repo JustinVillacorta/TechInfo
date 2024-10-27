@@ -75,13 +75,13 @@ class ItemCatalog : Fragment() {
             // Send the selected component back to the BuildPC fragment
             parentFragmentManager.setFragmentResult("selectedComponent", bundle)
 
-            // Optionally, navigate to detailed ItemsInfo screen
+            // Navigate to detailed ItemsInfo screen
             val itemInfoFragment = ItemsInfo.newInstance(component, position)
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, itemInfoFragment)
                 .addToBackStack(null)
                 .commit()
-        }, true) // Ensure you pass the correct value for isInBuildPCFragment
+        }, { component: ComponentData -> }, false) // Set isInBuildPCFragment to false
         recyclerView.adapter = componentAdapter
 
         setupSearchView()
@@ -91,6 +91,7 @@ class ItemCatalog : Fragment() {
             fetchAllComponentData(componentName)
         }
     }
+
 
     private fun fetchAllComponentData(componentName: String) {
         Log.d("ItemCatalog", "Fetching data for: $componentName")  // Log data fetching
@@ -407,5 +408,20 @@ class ItemCatalog : Fragment() {
             originalList.filterTo(filteredDataList) { it.name.lowercase().contains(searchText) }
         }
         componentAdapter.notifyDataSetChanged()
+    }
+    private fun removeSelectedComponent(component: ComponentData) {
+        // Check which type the component is and remove it from the appropriate list
+        when (component.type) {
+            "CPU" -> allCpuDataList.remove(component)
+            "GPU" -> allGpuDataList.remove(component)
+            "Motherboard" -> allMotherboardDataList.remove(component)
+            "RAM" -> allRamDataList.remove(component)
+            "PSU" -> allPsuDataList.remove(component)
+            "Case" -> allCaseDataList.remove(component)
+            "CPU Cooler" -> allCpuCoolerDataList.remove(component)
+            "SSD" -> allSsdDataList.remove(component)
+            "HDD" -> allHddDataList.remove(component)
+        }
+
     }
 }

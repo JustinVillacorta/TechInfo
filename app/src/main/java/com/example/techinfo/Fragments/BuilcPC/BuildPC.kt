@@ -62,16 +62,24 @@ class BuildPC : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.componentsRecyclerView)
-        componentAdapter = Adapter(componentDataList, { component, position ->
-            val componentName = component.name
-            if (componentName.isNotEmpty()) {
-                val partCatalogFragment = ItemCatalog.newInstance(component.type)
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, partCatalogFragment)
-                    .addToBackStack(null)
-                    .commit()
-            }
-        }, isInBuildPCFragment = true) // Pass true to indicate it's in BuildPC fragment
+        componentAdapter = Adapter(
+            componentDataList,
+            { component: ComponentData, position: Int -> // Specify types explicitly
+                // Existing code for selecting a component
+                val componentName = component.name
+                if (componentName.isNotEmpty()) {
+                    val partCatalogFragment = ItemCatalog.newInstance(component.type)
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, partCatalogFragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
+            },
+            { component: ComponentData -> // Specify type explicitly for unselect callback
+                removeSelectedComponent(component)
+            },
+            isInBuildPCFragment = true
+        )
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -80,9 +88,13 @@ class BuildPC : Fragment() {
 
 
         parentFragmentManager.setFragmentResultListener("selectedComponent", this) { _, bundle ->
-            val selectedComponent = bundle.getSerializable("selectedComponent") as ComponentData
-            val type = bundle.getString("type") ?: ""
-            updateSelectedComponent(type, selectedComponent)
+            val selectedComponent = bundle.getSerializable("selectedComponent") as? ComponentData
+            if (selectedComponent != null) {
+                val type = bundle.getString("type") ?: ""
+                updateSelectedComponent(type, selectedComponent)
+            } else {
+                Log.e("BuildPC", "Selected component not found")
+            }
         }
 
         buildButton = view.findViewById(R.id.BuildBTN)
@@ -377,6 +389,16 @@ class BuildPC : Fragment() {
                 }
             })
         }
+    }
+
+    private fun removeSelectedComponent(component: ComponentData) {
+        selectedComponentsMap.remove(component.type) // Remove from selected map
+        val position = componentDataList.indexOfFirst { it.type == component.type }
+        if (position != -1) {
+            componentDataList[position] = ComponentData(component.type, component.type) // Reset to default state
+            componentAdapter.notifyItemChanged(position)
+        }
+        updateProgressBars() // Update progress after unselecting
     }
 
     private fun saveSelectedComponents(processorName: String, gpuName: String, ramName: String, ssdName: String, hddName: String, psuName: String, coolerName: String, caseName: String, motherboardName: String) {

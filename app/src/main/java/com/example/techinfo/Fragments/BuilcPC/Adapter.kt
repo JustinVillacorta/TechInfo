@@ -1,6 +1,5 @@
 package com.example.techinfo.Fragments.BuildPCmodules
 
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +14,7 @@ import com.example.techinfo.R
 class Adapter(
     private val componentList: MutableList<ComponentData>,
     private val itemClickListener: (ComponentData, Int) -> Unit,
+    private val unselectCallback: (ComponentData) -> Unit, // Add this line for unselect callback
     private val isInBuildPCFragment: Boolean // Flag to indicate if this is the BuildPC fragment
 ) : RecyclerView.Adapter<Adapter.ComponentViewHolder>() {
 
@@ -46,7 +46,7 @@ class Adapter(
                 .setTitle("Unselect Item")
                 .setMessage("Are you sure you want to unselect ${component.name}?")
                 .setPositiveButton("Yes") { dialog, _ ->
-                    unselectItem(position)
+                    unselectItem(position) // Unselect item
                     dialog.dismiss()
                 }
                 .setNegativeButton("No") { dialog, _ ->
@@ -61,6 +61,7 @@ class Adapter(
             if (component.isSelected) {
                 component.isSelected = false // Unselect the item
                 notifyItemChanged(position) // Notify the adapter to refresh the item
+                unselectCallback(component) // Call the unselect callback
             }
         }
     }
