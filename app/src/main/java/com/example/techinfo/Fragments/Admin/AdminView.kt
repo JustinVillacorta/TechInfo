@@ -9,14 +9,24 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.techinfo.ui.ComponentItem
+import com.example.techinfo.ui.admin_adapter
+import com.example.techinfo.ui.Admin_catalog
 import com.example.techinfo.R
-import com.example.techinfo.Fragments.Admin.PC_parts.Admin_catalog
 
 class AdminView : Fragment() {
     private lateinit var recyclerViewAdmin: RecyclerView
     private lateinit var adminAdapter: admin_adapter
-    private val adminList: ArrayList<String> = arrayListOf(
-        "CPU", "GPU", "RAM", "Motherboard", "SSD", "HDD", "PSU", "Case", "CPU Cooler"
+    private val adminList: ArrayList<ComponentItem> = arrayListOf(
+        ComponentItem("CPU", R.drawable.cpu.toString()),
+        ComponentItem("GPU", R.drawable.gpu.toString()),
+        ComponentItem("RAM", R.drawable.ram.toString()),
+        ComponentItem("Motherboard", R.drawable.motherboard.toString()),
+        ComponentItem("SSD", R.drawable.ssd.toString()),
+        ComponentItem("HDD", R.drawable.hdd.toString()),
+        ComponentItem("PSU", R.drawable.psu.toString()),
+        ComponentItem("Case", R.drawable.computercase.toString()),
+        ComponentItem("CPU Cooler", R.drawable.cooler.toString())
     )
 
     override fun onCreateView(
@@ -31,7 +41,7 @@ class AdminView : Fragment() {
         adminAdapter = admin_adapter(requireContext(), adminList) { item, position ->
             val adminCatalogFragment = Admin_catalog().apply {
                 arguments = Bundle().apply {
-                    putString("componentType", item)
+                    putString("componentType", item.name) // Use item.name to get the component name
                 }
             }
             parentFragmentManager.beginTransaction()

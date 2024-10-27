@@ -1,39 +1,42 @@
-package com.example.techinfo.Fragments.Admin
+package com.example.techinfo.ui
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.techinfo.R
 
+data class ComponentItem(val name: String, val id: String)
+
 class admin_adapter(
     private val context: Context,
-    private val itemList: ArrayList<String>,
-    private val onItemClick: (String, Int) -> Unit
+    private val componentList: List<ComponentItem>,
+    private val onItemClick: (ComponentItem, Int) -> Unit
 ) : RecyclerView.Adapter<admin_adapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val itemName: TextView = itemView.findViewById(R.id.details)
-        val itemImage: ImageView = itemView.findViewById(R.id.image)
+        val nameTextView: TextView = itemView.findViewById(R.id.componentName) // Update with actual ID
 
         init {
             itemView.setOnClickListener {
-                onItemClick(itemList[adapterPosition], adapterPosition)
+                onItemClick(componentList[adapterPosition], adapterPosition)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.recycler_item, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_component, parent, false) // Update with your item layout
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemName.text = itemList[position]
+        val componentItem = componentList[position]
+        holder.nameTextView.text = componentItem.name
     }
 
-    override fun getItemCount(): Int = itemList.size
+    override fun getItemCount(): Int {
+        return componentList.size
+    }
 }

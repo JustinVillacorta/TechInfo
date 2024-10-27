@@ -1,11 +1,10 @@
 package com.example.techinfo.api_connector
+
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import com.google.gson.annotations.SerializedName
-import retrofit2.http.PUT
-import retrofit2.http.Path
 import retrofit2.http.Query
 import java.io.Serializable
 
@@ -22,24 +21,24 @@ data class PasswordResetRequest(
 )
 
 // Processor model
-    data class Processor(
-        val processor_id: String,
-        val processor_name: String,
-        val brand: String,
-        val socket_type: String,
-        val compatible_chipsets: String,
-        val cores: String,
-        val threads: String,
-        val base_clock_speed: String,
-        val max_turbo_boost_clock_speed: String,
-        val tdp: String,
-        val cache_size_mb: String,
-        val integrated_graphics: String,
-        val link: String,
-        val performance_score: String,
-        val created_at: String,
-        val updated_at: String
-    ) : Serializable  // Make it Serializable
+data class Processor(
+    val processor_id: String,
+    val processor_name: String,
+    val brand: String,
+    val socket_type: String,
+    val compatible_chipsets: String,
+    val cores: String,
+    val threads: String,
+    val base_clock_speed: String,
+    val max_turbo_boost_clock_speed: String,
+    val tdp: String,
+    val cache_size_mb: String,
+    val integrated_graphics: String,
+    val link: String,
+    val performance_score: String,
+    val created_at: String,
+    val updated_at: String
+) : Component, Serializable // Implementing Component and Serializable
 
 // Resolution model
 data class Resolution(
@@ -48,7 +47,7 @@ data class Resolution(
     val resolutions_name: String,
     val created_at: String,
     val updated_at: String
-) : Serializable
+) : Component, Serializable // Implementing Component and Serializable
 
 // GPU model
 data class Gpu(
@@ -75,8 +74,7 @@ data class Gpu(
     val performance_score: String,
     val created_at: String,
     val updated_at: String
-) : Serializable
-
+) : Component, Serializable // Implementing Component and Serializable
 
 // Motherboard model
 data class Motherboard(
@@ -100,7 +98,7 @@ data class Motherboard(
     val performance_score: String,
     val created_at: String,           // Creation timestamp
     val updated_at: String            // Last updated timestamp
-) : Serializable  // Ensure class implements Serializable interface
+) : Component, Serializable // Implementing Component and Serializable
 
 // RAM model
 data class Ram(
@@ -114,43 +112,43 @@ data class Ram(
     val performance_score: String,
     val created_at: String,
     val updated_at: String
-) : Serializable  // Make it Serializable
+) : Component, Serializable // Implementing Component and Serializable
 
 // Power Supply Unit model
 data class PowerSupplyUnit(
-    val psu_id: Int,                          // PSU ID
-    val psu_name: String,                     // PSU name
-    val brand: String,                        // Brand of the PSU
-    val wattage: String,                      // Total wattage (e.g., "750W")
-    val continuous_wattage: String,           // Continuous wattage (e.g., "750W")
-    val gpu_6_pin_connectors: Int,            // Number of 6-pin connectors
-    val gpu_8_pin_connectors: Int,            // Number of 8-pin connectors
-    val gpu_12_pin_connectors: Int,           // Number of 12-pin connectors
-    val efficiency_rating: String,            // Efficiency rating (e.g., "80+ Gold")
-    val has_required_connectors: Int,         // Whether it has the required connectors
+    val psu_id: Int,
+    val psu_name: String,
+    val brand: String,
+    val wattage: String,
+    val continuous_wattage: String,
+    val gpu_6_pin_connectors: Int,
+    val gpu_8_pin_connectors: Int,
+    val gpu_12_pin_connectors: Int,
+    val efficiency_rating: String,
+    val has_required_connectors: Int,
     val performance_score: String,
     val link: String?,
-    val created_at: String,                   // Creation timestamp
-    val updated_at: String                    // Last updated timestamp
-) : Serializable  // Make it Serializable
+    val created_at: String,
+    val updated_at: String
+) : Component, Serializable // Implementing Component and Serializable
 
 // Case model
 data class Case(
-    val case_id: Int,                     // Case ID
-    val case_name: String,                // Case name
-    val brand: String,                    // Brand of the case
-    val form_factor_supported: String,    // Supported form factors (e.g., "ATX, Micro-ATX, Mini-ITX")
-    val max_gpu_length_mm: String,        // Maximum GPU length in mm
-    val max_hdd_count: Int,               // Maximum number of HDDs supported
-    val max_ssd_count: Int,               // Maximum number of SSDs supported
-    val current_hdd_count: Int,           // Current number of installed HDDs
-    val current_ssd_count: Int,           // Current number of installed SSDs
-    val airflow_rating: String,           // Airflow rating (e.g., low, medium, high)
-    val max_cooler_height_mm: String,     // Maximum CPU cooler height in mm
+    val case_id: Int,
+    val case_name: String,
+    val brand: String,
+    val form_factor_supported: String,
+    val max_gpu_length_mm: String,
+    val max_hdd_count: Int,
+    val max_ssd_count: Int,
+    val current_hdd_count: Int,
+    val current_ssd_count: Int,
+    val airflow_rating: String,
+    val max_cooler_height_mm: String,
     val link: String?,
-    val created_at: String,               // Creation timestamp
-    val updated_at: String                // Last updated timestamp
-) : Serializable  // Make it Serializable
+    val created_at: String,
+    val updated_at: String
+) : Component, Serializable // Implementing Component and Serializable
 
 // CPU Cooler model
 data class CpuCooler(
@@ -163,7 +161,7 @@ data class CpuCooler(
     val link: String?,
     val created_at: String,
     val updated_at: String
-) : Serializable  // Make it Serializable
+) : Component, Serializable // Implementing Component and Serializable
 
 // HDD model
 data class Hdd(
@@ -175,7 +173,7 @@ data class Hdd(
     val created_at: String,
     val performance_score: String,
     val updated_at: String
-) : Serializable  // Make it Serializable
+) : Component, Serializable // Implementing Component and Serializable
 
 // SSD model
 data class Ssd(
@@ -187,12 +185,14 @@ data class Ssd(
     val performance_score: String,
     val created_at: String,
     val updated_at: String
-) : Serializable  // Make it Serializable
+) : Component, Serializable // Implementing Component and Serializable
+
+// Other data classes remain unchanged
 
 data class CompatibilityResponse(
-    val is_compatible: Boolean,  // A flag indicating if the components are compatible
-    val issues: List<String>,    // List of compatibility issues, if any
-    val components: SelectedComponents // A nested class to hold selected components
+    val is_compatible: Boolean,
+    val issues: List<String>,
+    val components: SelectedComponents
 )
 
 // A data class to hold the selected components for troubleshooting purposes
@@ -208,6 +208,7 @@ data class SelectedComponents(
     val ssd: String?
 )
 
+// Other data classes for bottleneck requests and responses remain unchanged
 
 data class BottleneckRequest(
     val processor_name: String,
@@ -268,11 +269,24 @@ data class TroubleshootContent(
 data class User(
     val id: Int,
     val username: String,
-    val password: String,
-    val createdAt: String,
-    val updatedAt: String
+    val password: String
 )
 
+data class UserProfile(
+    val id: Int,
+    val username: String,
+    val email: String
+)
+
+data class OtpResponse(
+    val message: String
+)
+
+data class PasswordResetResponse(
+    val message: String
+)
+
+// Define the API service interface
 interface ApiService {
     @GET("troubleshoot_articles")
     fun getTroubleshootArticles(): Call<List<TroubleshootContent>>
@@ -288,36 +302,35 @@ interface ApiService {
     @POST("admin/reset-password")
     fun resetPassword(@Body request: PasswordResetRequest): Call<Void>
 
-    // Component APIs
+    @GET("screen_resolutions")
+    fun getResolution(): Call<List<Resolution>>
+
     @GET("processors")
     fun getProcessors(): Call<List<Processor>>
 
     @GET("gpuses")
     fun getGpus(): Call<List<Gpu>>
 
-    @GET("screen_resolutions")
-    fun getResolution(): Call<List<Resolution>>
-
     @GET("rams")
     fun getRams(): Call<List<Ram>>
 
     @GET("motherboards")
-    fun getMotherboards(): Call<List<Motherboard>>  // Added motherboard endpoint
+    fun getMotherboards(): Call<List<Motherboard>>
 
     @GET("power_supply_units")
-    fun getPowerSupplyUnits(): Call<List<PowerSupplyUnit>>  // Added PSU endpoint
+    fun getPowerSupplyUnits(): Call<List<PowerSupplyUnit>>
 
     @GET("computer_cases")
-    fun getComputerCases(): Call<List<Case>>  // Added case endpoint
+    fun getComputerCases(): Call<List<Case>>
 
     @GET("cpu_coolers")
-    fun getCpuCoolers(): Call<List<CpuCooler>>  // Added CPU cooler endpoint
-
-    @GET("hdds")
-    fun getHdds(): Call<List<Hdd>>  // Added HDD endpoint
+    fun getCpuCoolers(): Call<List<CpuCooler>>
 
     @GET("ssds")
-    fun getSsds(): Call<List<Ssd>>  // Added SSD endpoint
+    fun getSsds(): Call<List<Ssd>>
+
+    @GET("hdds")
+    fun getHdds(): Call<List<Hdd>>
 
     @GET("compatibility_checker")
     fun checkCompatibility(
@@ -338,4 +351,9 @@ interface ApiService {
     @POST("pc_compare")
     fun getBuildComparison(@Body data: BuildComparisonRequest): Call<BuildComparisonResponse>
 
+    // Other API endpoints as needed
+}
+
+interface Component {
+    // You can define common methods or properties here if needed
 }

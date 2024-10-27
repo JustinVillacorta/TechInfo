@@ -1,11 +1,11 @@
-package com.example.techinfo.Fragments.Admin.PC_parts
+// Admin_info.kt
+package com.example.techinfo.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.techinfo.R
@@ -14,11 +14,12 @@ class Admin_info : Fragment() {
 
     private lateinit var componentName: String
     private lateinit var componentDetails: String
-    private lateinit var createdTime: String // Assuming you will receive created time
-    private lateinit var updatedTime: String // Assuming you will receive updated time
+    private lateinit var createdTime: String
+    private lateinit var updatedTime: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         // Retrieve data from the arguments
         componentName = arguments?.getString("componentName") ?: "Unknown"
         componentDetails = arguments?.getString("componentDetails") ?: "No details available"
@@ -44,7 +45,6 @@ class Admin_info : Fragment() {
         val updatedTimeTextView: TextView = view.findViewById(R.id.updatedTimeTextView)
 
         // Initialize buttons
-
         val updateButton: Button = view.findViewById(R.id.updateButton)
         val deleteButton: Button = view.findViewById(R.id.deleteButton)
 
@@ -53,8 +53,6 @@ class Admin_info : Fragment() {
         contentTextView.text = componentDetails
         createdTimeTextView.text = createdTime
         updatedTimeTextView.text = updatedTime
-
-
 
         updateButton.setOnClickListener {
             // Handle the Update button click
