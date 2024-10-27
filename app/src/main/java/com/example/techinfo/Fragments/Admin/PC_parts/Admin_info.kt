@@ -44,7 +44,7 @@ class Admin_info : Fragment() {
         val updatedTimeTextView: TextView = view.findViewById(R.id.updatedTimeTextView)
 
         // Initialize buttons
-        val addButton: Button = view.findViewById(R.id.addButton)
+
         val updateButton: Button = view.findViewById(R.id.updateButton)
         val deleteButton: Button = view.findViewById(R.id.deleteButton)
 
@@ -54,11 +54,7 @@ class Admin_info : Fragment() {
         createdTimeTextView.text = createdTime
         updatedTimeTextView.text = updatedTime
 
-        // Set up button click listeners
-        addButton.setOnClickListener {
-            // Handle the Add button click
-            // Implement your add logic here
-        }
+
 
         updateButton.setOnClickListener {
             // Handle the Update button click
