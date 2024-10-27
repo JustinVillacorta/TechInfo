@@ -10,7 +10,7 @@
         android:id="@+id/Models"
         style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:hint="Models"
         app:layout_constraintBottom_toTopOf="@id/guideline1"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -39,12 +39,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="nonetype"
         android:src="@drawable/baseline_add_24"
         app:layout_constraintBottom_toTopOf="@id/guidelinebutton3"
         app:layout_constraintEnd_toStartOf="@+id/guidelinebutton2"
         app:layout_constraintStart_toEndOf="@+id/guidelinebutton4"
         app:layout_constraintTop_toBottomOf="@id/guidelinebutton1" />
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
