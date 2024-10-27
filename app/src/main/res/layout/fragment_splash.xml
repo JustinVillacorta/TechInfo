@@ -2,13 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"> <!-- Use a drawable for background -->
+    android:background="@color/background">
 
-    <!-- ImageView for splash image -->
+    <!-- VideoView for splash video, set to match the parent dimensions -->
     <VideoView
         android:id="@+id/VideoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:contentDescription="TechInfo" />
 </RelativeLayout>

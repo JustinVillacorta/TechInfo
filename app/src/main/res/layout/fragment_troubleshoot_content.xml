@@ -23,28 +23,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/cardview_buildpc_troubleshoot"
                 android:orientation="vertical">
 
                 <!-- YouTubePlayerView instead of ImageView for the video -->
                 <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                     android:id="@+id/youtubePlayerView"
                     android:layout_width="match_parent"
-                    android:layout_height="185dp"
+                    android:layout_height="240dp"
                     android:layout_gravity="top"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
-                    android:visibility="gone" /> <!-- Initially hidden -->
+                    android:layout_marginBottom="26dp"
+                    android:scaleType="centerCrop" />
 
                 <!-- Fixed Article Title below the YouTubePlayerView with 10dp padding -->
                 <TextView
                     android:id="@+id/articleTitleTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
                     android:layout_marginBottom="16dp"
-                    android:padding="10dp" />
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <!-- Scrollable content starts below the Article Title -->
                 <ScrollView

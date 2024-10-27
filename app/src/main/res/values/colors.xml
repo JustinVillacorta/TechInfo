@@ -12,4 +12,5 @@
     <color name="Red_progressbar">#C86464</color>
     <color name="Green_progressbar">#85F494</color>
     <color name="cardview">#B0C4DE</color>
+    <color name="cardview_buildpc_troubleshoot">#ADD8E6</color>
 </resources>

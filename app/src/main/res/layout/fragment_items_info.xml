@@ -17,6 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/cardview_buildpc_troubleshoot"
             android:orientation="vertical">
 
             <!-- Fixed ImageView at the top with 16dp padding -->
@@ -87,14 +88,15 @@
             </ScrollView>
 
             <!-- Add the "OK" Button at the bottom -->
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/okButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="OK"
-                android:textColor="@android:color/white"
-                android:background="@color/blue"
+                android:textColor="@android:color/black"
+                android:background="@color/white"
                 android:padding="16dp"
+
                 android:layout_marginTop="16dp" />
 
         </LinearLayout>
