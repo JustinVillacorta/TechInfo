@@ -38,7 +38,7 @@ data class Processor(
     val performance_score: String,
     val created_at: String,
     val updated_at: String
-) : Component, Serializable // Implementing Component and Serializable
+) :  Serializable // Implementing  and Serializable
 
 // Resolution model
 data class Resolution(
@@ -47,7 +47,7 @@ data class Resolution(
     val resolutions_name: String,
     val created_at: String,
     val updated_at: String
-) : Component, Serializable // Implementing Component and Serializable
+) : Serializable // Implementing  and Serializable
 
 // GPU model
 data class Gpu(
@@ -74,7 +74,7 @@ data class Gpu(
     val performance_score: String,
     val created_at: String,
     val updated_at: String
-) : Component, Serializable // Implementing Component and Serializable
+) : Serializable // Implementing  and Serializable
 
 // Motherboard model
 data class Motherboard(
@@ -98,7 +98,7 @@ data class Motherboard(
     val performance_score: String,
     val created_at: String,           // Creation timestamp
     val updated_at: String            // Last updated timestamp
-) : Component, Serializable // Implementing Component and Serializable
+) : Serializable // Implementing Component and Serializable
 
 // RAM model
 data class Ram(
@@ -112,7 +112,7 @@ data class Ram(
     val performance_score: String,
     val created_at: String,
     val updated_at: String
-) : Component, Serializable // Implementing Component and Serializable
+) :  Serializable // Implementing Component and Serializable
 
 // Power Supply Unit model
 data class PowerSupplyUnit(
@@ -130,7 +130,7 @@ data class PowerSupplyUnit(
     val link: String?,
     val created_at: String,
     val updated_at: String
-) : Component, Serializable // Implementing Component and Serializable
+) :  Serializable // Implementing Component and Serializable
 
 // Case model
 data class Case(
@@ -148,7 +148,7 @@ data class Case(
     val link: String?,
     val created_at: String,
     val updated_at: String
-) : Component, Serializable // Implementing Component and Serializable
+) :  Serializable // Implementing Component and Serializable
 
 // CPU Cooler model
 data class CpuCooler(
@@ -161,7 +161,7 @@ data class CpuCooler(
     val link: String?,
     val created_at: String,
     val updated_at: String
-) : Component, Serializable // Implementing Component and Serializable
+) :  Serializable // Implementing Component and Serializable
 
 // HDD model
 data class Hdd(
@@ -173,7 +173,7 @@ data class Hdd(
     val created_at: String,
     val performance_score: String,
     val updated_at: String
-) : Component, Serializable // Implementing Component and Serializable
+) :  Serializable // Implementing Component and Serializable
 
 // SSD model
 data class Ssd(
@@ -185,7 +185,7 @@ data class Ssd(
     val performance_score: String,
     val created_at: String,
     val updated_at: String
-) : Component, Serializable // Implementing Component and Serializable
+) :  Serializable // Implementing Component and Serializable
 
 // Other data classes remain unchanged
 
@@ -266,41 +266,15 @@ data class TroubleshootContent(
     @SerializedName("updated_at") val updatedAt: String
 )
 
-data class User(
-    val id: Int,
-    val username: String,
-    val password: String
-)
 
-data class UserProfile(
-    val id: Int,
-    val username: String,
-    val email: String
-)
 
-data class OtpResponse(
-    val message: String
-)
 
-data class PasswordResetResponse(
-    val message: String
-)
 
 // Define the API service interface
 interface ApiService {
     @GET("troubleshoot_articles")
     fun getTroubleshootArticles(): Call<List<TroubleshootContent>>
 
-    @GET("accounts")
-    fun getUsers(): Call<List<User>>
-
-    // Request to send OTP to email
-    @POST("admin/request-reset")
-    fun requestOTP(@Body request: OTPRequest): Call<Void>
-
-    // Request to reset password with OTP and new password
-    @POST("admin/reset-password")
-    fun resetPassword(@Body request: PasswordResetRequest): Call<Void>
 
     @GET("screen_resolutions")
     fun getResolution(): Call<List<Resolution>>
@@ -352,8 +326,4 @@ interface ApiService {
     fun getBuildComparison(@Body data: BuildComparisonRequest): Call<BuildComparisonResponse>
 
     // Other API endpoints as needed
-}
-
-interface Component {
-    // You can define common methods or properties here if needed
 }
