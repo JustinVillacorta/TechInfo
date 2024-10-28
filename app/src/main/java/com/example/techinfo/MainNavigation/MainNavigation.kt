@@ -122,9 +122,15 @@ class MainNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     }
 
     private fun replaceFragment(fragment: Fragment, title: String) {
+        // Clear all fragments from the back stack
+        supportFragmentManager.popBackStackImmediate(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
+
+        // Replace the fragment
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+
+        // Update the action bar title
         supportActionBar?.title = title
     }
 
