@@ -89,6 +89,11 @@ dependencies {
     //Picasso
     implementation ("com.squareup.picasso:picasso:2.8")
 
+
+    //textinput for forgot password
+    implementation ("com.google.android.material:material:1.8.0")
+
+
     // Additional dependencies from libs.versions.toml (ensure they are defined correctly)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

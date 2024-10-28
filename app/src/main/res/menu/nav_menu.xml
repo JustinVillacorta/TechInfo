@@ -25,11 +25,7 @@
             android:id="@+id/nav_troubleshoot"
             android:icon="@drawable/troubleshoot_icon"
             android:title="Troubleshoot and Solutions" />
-
-        <item
-            android:id="@+id/nav_admin"
-            android:icon="@drawable/admin"
-            android:title="Admin" />
+        
     </group>
 
     <!-- Additional menu item for admin -->

@@ -2,16 +2,12 @@ package com.example.techinfo.MainNavigation
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import com.example.techinfo.Fragments.Admin.Admin
-import com.example.techinfo.Fragments.Admin.AdminView
-import com.example.techinfo.Fragments.Admin.TroubleshootAdmin
 import com.example.techinfo.Fragments.Bottleneck.BottleNeck
 import com.example.techinfo.Fragments.BuildPC.BuildPC
 import com.example.techinfo.Fragments.PcComparison.PcComparison
@@ -20,12 +16,11 @@ import com.example.techinfo.R
 import com.google.android.material.navigation.NavigationView
 import com.example.techinfo.databinding.ActivityMainNavigationBinding
 
-class MainNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, Admin.PassInt {
+class MainNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var binding: ActivityMainNavigationBinding
-    var recievedData: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,23 +34,6 @@ class MainNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         navigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
 
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.buildcompare -> {
-                    replaceFragment(PcComparison(),"PC compare")
-                    true
-                }
-                R.id.pc_parts -> {
-                    replaceFragment(AdminView(), "Admin")
-                    true
-                }
-                R.id.troubleShoot_admin -> {
-                    replaceFragment(TroubleshootAdmin(),"Admin")
-                    true
-                }
-                else -> false
-            }
-        }
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav
@@ -67,7 +45,6 @@ class MainNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         if (savedInstanceState == null) {
             replaceFragment(BuildPC(), "Build your PC")  // Use BuildPCFragment instead of BuildPC
             navigationView.setCheckedItem(R.id.nav_buildpc)
-            binding.bottomNavigationView.visibility = View.GONE // Hide Bottom Nav initially
         }
     }
 
@@ -75,51 +52,26 @@ class MainNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         when (item.itemId) {
             R.id.nav_buildpc -> {
                 replaceFragment(BuildPC(),"Build your PC")  // Use BuildPCFragment instead of BuildPC
-                binding.bottomNavigationView.visibility = View.GONE // Hide Bottom Nav
             }
             R.id.nav_pc_compare -> {
                 replaceFragment(PcComparison(), "PC compare")
-                binding.bottomNavigationView.visibility = View.GONE // Hide Bottom Nav
             }
             R.id.nav_bottleneck -> {
                 replaceFragment(BottleNeck(), "Bottleneck Calculator")
-                binding.bottomNavigationView.visibility = View.GONE // Hide Bottom Nav
             }
             R.id.nav_troubleshoot -> {
                 replaceFragment(TroubleShoot(), "Troubleshoot")
-                binding.bottomNavigationView.visibility = View.GONE // Hide Bottom Nav
+
             }
-            R.id.nav_admin -> {
-                if (recievedData == 1) {
-                    // User logged in, show AdminView and bottom navigation
-                    replaceFragment(AdminView(), "Admin")
-                    binding.bottomNavigationView.visibility = View.VISIBLE // Show Bottom Nav after login
-                    updateBottomNavigation(R.menu.bottom_navbar) // Show Admin specific nav menu
-                } else {
-                    // Not logged in, show Admin fragment and hide bottom navigation
-                    replaceFragment(Admin(),"Admin")
-                    binding.bottomNavigationView.visibility = View.GONE // Ensure Bottom Nav is hidden
-                }
-            }
+
+
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
-    private fun updateBottomNavigation(menuRes: Int) {
-        binding.bottomNavigationView.menu.clear()
-        binding.bottomNavigationView.inflateMenu(menuRes)
-        binding.bottomNavigationView.visibility = View.VISIBLE
-    }
 
-    override fun PassInt(data: Int) {
-        recievedData = data
-        if (recievedData == 1) {
-            replaceFragment(AdminView(), "Admin")
-            binding.bottomNavigationView.visibility = View.VISIBLE
-            updateBottomNavigation(R.menu.bottom_navbar)
-        }
-    }
+
 
     private fun replaceFragment(fragment: Fragment, title: String) {
         // Clear all fragments from the back stack
